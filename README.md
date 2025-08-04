@@ -174,19 +174,6 @@ Update the language select options in `index.html`:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
-
-- **Design Inspiration**: VEED.io for the clean, modern UI design
-- **Icons**: Font Awesome for the beautiful icon set
-- **Fonts**: Google Fonts (Inter) for typography
-- **Colors**: Tailwind CSS color palette for consistency
-
-## 📞 Support
-
-For support, questions, or feature requests:
-- Create an issue in the repository
-- Email: support@vidface.com
-- Documentation: [docs.vidface.com](https://docs.vidface.com)
 
 ---
 
