@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VidFace - AI Avatar Video Generator
+    </title>
+    <link rel="icon" href="assets/icon.png">
+    
+    <!-- font imp    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- font w CDN/Web Links -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+        
+       
+        .hero-title {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-weight: 900;
+            font-style: italic;
+        }
+        
+       
+        body {
+            font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 700;
+        }
+        
+       
+        h1, h2, h3, h4, h5, h6,
+        .nav-link,
+        .btn-primary,
+        .btn-secondary,
+        .generate-btn,
+        .template-btn {
+            font-weight: 800;
+        }
+        
+        /* making main heading more distinctive */
+        .hero-title {
+            font-size: 48px;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* loader func */
+        .loader {
+            width: 44.8px;
+            height: 44.8px;
+            color: #554cb5;
+            position: relative;
+            background: radial-gradient(11.2px,currentColor 94%,#0000);
+        }
+
+        .loader:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(10.08px at bottom right,#0000 94%,currentColor) top    left,
+                    radial-gradient(10.08px at bottom left ,#0000 94%,currentColor) top    right,
+                    radial-gradient(10.08px at top    right,#0000 94%,currentColor) bottom left,
+                    radial-gradient(10.08px at top    left ,#0000 94%,currentColor) bottom right;
+            background-size: 22.4px 22.4px;
+            background-repeat: no-repeat;
+            animation: loader 1.5s infinite cubic-bezier(0.3,1,0,1);
+        }
+
+        @keyframes loader {
+            33% {
+                inset: -11.2px;
+                transform: rotate(0deg);
+            }
+
+            66% {
+                inset: -11.2px;
+                transform: rotate(90deg);
+            }
+
+            100% {
+                inset: 0;
+                transform: rotate(90deg);
+            }
+        }
+
+        /* loader cont */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .loader-container.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- loader main -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- top banner -->
+    <div class="top-banner">
+        <div class="banner-content">
+            <span>Create professional talking avatar videos with AI</span>
+            <button class="banner-btn">Try Free</button>
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <!-- header nav -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="#hero-section" onclick="scrollToTop()">
+                        <img src="assets/logo0bg.png" alt="VidFace Logo">
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#hero-section" class="nav-link"><i class="fas fa-bolt"></i> AI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#how-it-works" class="nav-link">How To</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reviews" class="nav-link">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pricing.html" class="nav-link">Pricing</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <button class="btn-secondary" onclick="window.location.href='signin.html'">Login</button>
+                <button class="btn-primary" onclick="window.location.href='signup.html'">Sign Up</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- breadcrumbs
+    <div class="breadcrumbs">
+        <span>Home</span>
+        <i class="fas fa-chevron-right"></i>
+        <span>VidFace Tools</span>
+        <i class="fas fa-chevron-right"></i>
+        <span>AI Avatar Generator</span>
+    </div> -->
+
+    <!-- mainciontent -->
+    <main class="main-content">
+        <div class="content-container">
+            <!-- hero -->
+            <div class="hero-section" id="hero-section">
+                <div class="hero-header">
+                    <div class="hero-badge">
+                        <i class="fas fa-bolt"></i>
+                        <span>AI Avatar Video Generator</span>
+                    </div>
+                    <h1 class="hero-title">AI AVATAR VIDEO GENERATOR</h1>
+                    <p class="hero-subtitle">Transform your text into engaging talking avatar videos with realistic lip-sync and natural voice synthesis.</p>
+                </div>
+
+                <!-- main inp section -->
+                <div class="input-section">
+                    <div class="script-input-container">
+                        <textarea 
+                            class="script-input" 
+                            placeholder="Type your script here... (e.g., Welcome to our product demo! Today we'll show you how our AI technology can revolutionize your workflow.)"
+                            rows="4"
+                        ></textarea>
+                        <div class="input-actions">
+                            <button class="generate-btn">
+                                <i class="fas fa-bolt"></i>
+                                Generate Video
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- quick temp (prompt) -->
+                    <div class="templates-section">
+                        <h3>Quick Templates</h3>
+                        <div class="template-buttons">
+                            <button class="template-btn">
+                                <i class="fas fa-ad"></i>
+                                Create an Ad
+                            </button>
+                            <button class="template-btn">
+                                <i class="fas fa-bullhorn"></i>
+                                Create a Promo
+                            </button>
+                            <button class="template-btn">
+                                <i class="fas fa-lightbulb"></i>
+                                Create a Tutorial
+                            </button>
+                            <button class="template-btn">
+                                <i class="fas fa-cog"></i>
+                                Create a Presentation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- config section -->
+            <div class="config-section">
+                <h2>Customize Your Video</h2>
+                
+                <!-- sselect ur avatar -->
+                <div class="config-card">
+                    <h3><i class="fas fa-user"></i> Avatar Selection</h3>
+                    <div class="avatar-options">
+                        <div class="avatar-option active">
+                            <img src="assets/pro-male.jpg" alt="Avatar 1">
+                            <span>Professional Male</span>
+                        </div>
+                        <div class="avatar-option">
+                            <img src="assets/pro-female.jpg" alt="Avatar 2">
+                            <span>Professional Female</span>
+                        </div>
+                        <div class="avatar-option">
+                            <img src="assets/casual-male.jpg" alt="Avatar 3">
+                            <span>Casual Male</span>
+                        </div>
+                        <div class="avatar-option">
+                            <img src="assets/casual-female.jpg" alt="Avatar 4">
+                            <span>Casual Female</span>
+                        </div>
+                        <div class="avatar-option upload-option">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-plus"></i>
+                                <span>Upload Your Photo</span>
+                            </div>
+                            <input type="file" id="avatar-upload" accept="image/*" hidden>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- voice and lang setting -->
+                <div class="config-row">
+                    <div class="config-card">
+                        <h3><i class="fas fa-microphone"></i> Voice Settings</h3>
+                        <div class="form-group">
+                            <label>Voice Tone</label>
+                            <select class="form-select">
+                                <option value="friendly">Friendly & Warm</option>
+                                <option value="professional">Professional & Formal</option>
+                                <option value="energetic">Energetic & Exciting</option>
+                                <option value="calm">Calm & Soothing</option>
+                                <option value="authoritative">Authoritative & Confident</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Voice Speed</label>
+                            <select class="form-select">
+                                <option value="slow">Slow</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="fast">Fast</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="config-card">
+                        <h3><i class="fas fa-globe"></i> Language Settings</h3>
+                        <div class="form-group">
+                            <label>Language</label>
+                            <select class="form-select">
+                                <option value="en" selected>English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                                <option value="it">Italian</option>
+                                <option value="pt">Portuguese</option>
+                                <option value="ja">Japanese</option>
+                                <option value="ko">Korean</option>
+                                <option value="zh">Chinese</option>
+                                <option value="hi">Hindi</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Accent</label>
+                            <select class="form-select">
+                                <option value="us" selected>American</option>
+                                <option value="uk">British</option>
+                                <option value="au">Australian</option>
+                                <option value="ca">Canadian</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- vid setting -->
+                <div class="config-card">
+                    <h3><i class="fas fa-video"></i> Video Settings</h3>
+                    <div class="config-row">
+                        <div class="form-group">
+                            <label>Resolution</label>
+                            <select class="form-select">
+                                <option value="720p">720p (HD)</option>
+                                <option value="1080p" selected>1080p (Full HD)</option>
+                                <option value="4k">4K (Ultra HD)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <select class="form-select">
+                                <option value="15s">15 seconds</option>
+                                <option value="30s" selected>30 seconds</option>
+                                <option value="60s">1 minute</option>
+                                <option value="120s">2 minutes</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Background</label>
+                            <select class="form-select">
+                                <option value="blur" selected>Blurred</option>
+                                <option value="office">Office</option>
+                                <option value="studio">Studio</option>
+                                <option value="outdoor">Outdoor</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- preview selection -->
+            <div class="preview-section" id="preview-section" style="display: none;">
+                <h2>Generated Video Preview</h2>
+                <div class="video-preview">
+                    <div class="video-container">
+                        <video id="preview-video" controls>
+                            <source src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-actions">
+                        <button class="btn-secondary">
+                            <i class="fas fa-redo"></i>
+                            Regenerate
+                        </button>
+                        <button class="btn-primary">
+                            <i class="fas fa-download"></i>
+                            Download MP4
+                        </button>
+                        <button class="btn-secondary">
+                            <i class="fas fa-share"></i>
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- how to section -->
+            <div class="how-it-works" id="how-it-works">
+                <h2>How to Create Your AI Avatar Video</h2>
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Write Your Script</h3>
+                        <p>Type or paste your text content. You can use our templates or write your own script for any purpose - marketing, education, or entertainment.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Choose Your Avatar</h3>
+                        <p>Select from our professional avatars or upload your own photo to create a personalized talking head that matches your brand.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Customize & Generate</h3>
+                        <p>Pick your preferred voice, language, and video settings. Our AI will create a realistic talking avatar video with perfect lip-sync.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- reviews -->
+            <div class="reviews-section" id="reviews">
+                <h2>What Our Users Say</h2>
+                <div class="reviews-showcase">
+                    <div class="reviews-grid" id="reviews-grid">
+                        <!-- teview 1 -->
+                        <div class="review-item active">
+                            <div class="review-content">
+                                <div class="review-header">
+                                    <img src="assets/robin.webp" alt="Robin Williams" class="reviewer-avatar">
+                                    <div class="reviewer-info">
+                                        <h4>Robin Williams</h4>
+                                        <p>Marketing Manager</p>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text">"VidFace has revolutionized our video marketing. We can create professional talking videos in minutes instead of hours. The AI quality is incredible!"</p>
+                            </div>
+                        </div>
+                        
+                        <!-- review 2 -->
+                        <div class="review-item">
+                            <div class="review-content">
+                                <div class="review-header">
+                                    <img src="assets/christopher.jpg" alt="Christopher Nolan" class="reviewer-avatar">
+                                    <div class="reviewer-info">
+                                        <h4>Christopher Nolan</h4>
+                                        <p>Content Creator</p>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text">"The voice customization options are amazing. I can create videos in multiple languages and accents. Perfect for my international audience!"</p>
+                            </div>
+                        </div>
+                        
+                        <!-- review 3 -->
+                        <div class="review-item">
+                            <div class="review-content">
+                                <div class="review-header">
+                                    <img src="assets/david.jpg" alt="David Fincher" class="reviewer-avatar">
+                                    <div class="reviewer-info">
+                                        <h4>David Fincher</h4>
+                                        <p>Startup Founder</p>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text">"As a startup, we needed professional videos without the budget for expensive production. VidFace delivers exactly what we need!"</p>
+                            </div>
+                        </div>
+
+                        <!-- review 4 -->
+                        <div class="review-item">
+                            <div class="review-content">
+                                <div class="review-header">
+                                    <img src="assets/jake.jpg" alt="Jake Gyllenhaal" class="reviewer-avatar">
+                                    <div class="reviewer-info">
+                                        <h4>Jake Gyllenhaal</h4>
+                                        <p>E-learning Specialist</p>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text">"Perfect for creating educational content! The lip-sync accuracy is spot-on, and my students love the engaging presentations."</p>
+                            </div>
+                        </div>
+
+                        <!-- review 5 -->
+                        <div class="review-item">
+                            <div class="review-content">
+                                <div class="review-header">
+                                    <img src="assets/diddy.jpg" alt="P Diddy" class="reviewer-avatar">
+                                    <div class="reviewer-info">
+                                        <h4>P Diddy</h4>
+                                        <p>Social Media Manager</p>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text">"Game-changer for social media! I can create multiple videos in different styles and languages. Engagement rates have doubled!"</p>
+                            </div>
+                        </div>
+
+                        <!-- Review 6 -->
+                        <div class="review-item">
+                            <div class="review-content">
+                                <div class="review-header">
+                                    <img src="assets/brad.jpg" alt="Brad Pitt" class="reviewer-avatar">
+                                    <div class="reviewer-info">
+                                        <h4>Brad Pitt</h4>
+                                        <p>Product Manager</p>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text">"The avatar customization is incredible! I can create videos that perfectly match our brand identity. ROI is phenomenal!"</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- review progress loader indicator -->
+                    <div class="review-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>VidFace</h4>
+                <p>Transform text into engaging talking avatar videos with AI-powered technology.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Pricing</h4>
+                <ul>
+                    <li><a href="pricing.html">Free</a></li>
+                    <li><a href="pricing.html">Pro</a></li>
+                    <li><a href="pricing.html">Enterprise</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#how-it-works">How To Guide</a></li>
+                    <li><a href="#">API Documentation</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VidFace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

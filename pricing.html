@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - VidFace</title>
+    
+    <!-- Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        .pricing-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 40px 20px;
+        }
+
+        .pricing-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .pricing-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: #1f2937;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pricing-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .billing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .billing-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            background: #e5e7eb;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #8b5cf6;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 28px;
+            height: 28px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(28px);
+        }
+
+        .savings-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: #8b5cf6;
+        }
+
+        .pricing-card.popular {
+            border-color: #8b5cf6;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+        }
+
+        .pricing-card.popular::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-card.popular {
+            padding-top: 60px;
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 900;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .plan-description {
+            color: #6b7280;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .plan-price {
+            margin-bottom: 32px;
+        }
+
+        .price-amount {
+            font-size: 48px;
+            font-weight: 900;
+            color: #1f2937;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .price-currency {
+            font-size: 24px;
+            color: #6b7280;
+        }
+
+        .price-period {
+            font-size: 16px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: #9ca3af;
+            font-size: 20px;
+            margin-left: 12px;
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 32px;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 16px;
+            color: #374151;
+        }
+
+        .plan-features i {
+            color: #10b981;
+            font-size: 18px;
+            width: 20px;
+        }
+
+        .plan-features .disabled {
+            color: #9ca3af;
+        }
+
+        .plan-features .disabled i {
+            color: #d1d5db;
+        }
+
+        .plan-btn {
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .plan-btn.primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .plan-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .plan-btn.secondary {
+            background: white;
+            color: #8b5cf6;
+            border: 2px solid #8b5cf6;
+        }
+
+        .plan-btn.secondary:hover {
+            background: #8b5cf6;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .plan-btn.outline {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .plan-btn.outline:hover {
+            border-color: #8b5cf6;
+            color: #8b5cf6;
+        }
+
+        .faq-section {
+            max-width: 800px;
+            margin: 80px auto 0;
+            text-align: center;
+        }
+
+        .faq-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1f2937;
+            margin-bottom: 40px;
+        }
+
+        .faq-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .faq-answer {
+            color: #6b7280;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #1f2937;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .pricing-title {
+                font-size: 36px;
+            }
+
+            .pricing-subtitle {
+                font-size: 18px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .pricing-card {
+                padding: 30px 24px;
+            }
+
+            .price-amount {
+                font-size: 36px;
+            }
+
+            .back-link {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 20px;
+                display: inline-flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pricing-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="pricing-header">
+            <h1 class="pricing-title">Choose Your Plan</h1>
+            <p class="pricing-subtitle">Select the perfect plan for your video creation needs. Start free and upgrade as you grow.</p>
+            
+            <div class="billing-toggle">
+                <span class="billing-label">Monthly</span>
+                <div class="toggle-switch" id="billing-toggle">
+                    <div class="toggle-slider"></div>
+                </div>
+                <span class="billing-label">Yearly <span class="savings-badge">Save 20%</span></span>
+            </div>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card">
+                <h3 class="plan-name">Free</h3>
+                <p class="plan-description">Perfect for getting started with AI avatar videos</p>
+                
+                <div class="plan-price">
+                    <div class="price-amount">
+                        <span class="price-currency">$</span>
+                        <span class="price-value" data-monthly="0" data-yearly="0">0</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                </div>
+                
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 5 videos per month</li>
+                    <li><i class="fas fa-check"></i> Basic avatars</li>
+                    <li><i class="fas fa-check"></i> Standard voice options</li>
+                    <li><i class="fas fa-check"></i> 720p resolution</li>
+                    <li><i class="fas fa-check"></i> Community support</li>
+                    <li class="disabled"><i class="fas fa-times"></i> Premium avatars</li>
+                    <li class="disabled"><i class="fas fa-times"></i> Advanced voice cloning</li>
+                    <li class="disabled"><i class="fas fa-times"></i> Priority support</li>
+                </ul>
+                
+                <button class="plan-btn outline">Get Started Free</button>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="pricing-card popular">
+                <h3 class="plan-name">Pro</h3>
+                <p class="plan-description">Best for content creators and small businesses</p>
+                
+                <div class="plan-price">
+                    <div class="price-amount">
+                        <span class="price-currency">$</span>
+                        <span class="price-value" data-monthly="29" data-yearly="23">29</span>
+                        <span class="price-period">/month</span>
+                        <span class="price-original" data-monthly="29" data-yearly="348">$29</span>
+                    </div>
+                </div>
+                
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 100 videos per month</li>
+                    <li><i class="fas fa-check"></i> Premium avatars</li>
+                    <li><i class="fas fa-check"></i> Advanced voice options</li>
+                    <li><i class="fas fa-check"></i> 1080p resolution</li>
+                    <li><i class="fas fa-check"></i> Custom backgrounds</li>
+                    <li><i class="fas fa-check"></i> Priority support</li>
+                    <li><i class="fas fa-check"></i> Brand customization</li>
+                    <li class="disabled"><i class="fas fa-times"></i> Voice cloning</li>
+                </ul>
+                
+                <button class="plan-btn primary">Start Pro Trial</button>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="pricing-card">
+                <h3 class="plan-name">Enterprise</h3>
+                <p class="plan-description">For large teams and unlimited video creation</p>
+                
+                <div class="plan-price">
+                    <div class="price-amount">
+                        <span class="price-currency">$</span>
+                        <span class="price-value" data-monthly="99" data-yearly="79">99</span>
+                        <span class="price-period">/month</span>
+                        <span class="price-original" data-monthly="99" data-yearly="1188">$99</span>
+                    </div>
+                </div>
+                
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> Unlimited videos</li>
+                    <li><i class="fas fa-check"></i> All premium avatars</li>
+                    <li><i class="fas fa-check"></i> Voice cloning</li>
+                    <li><i class="fas fa-check"></i> 4K resolution</li>
+                    <li><i class="fas fa-check"></i> Team collaboration</li>
+                    <li><i class="fas fa-check"></i> API access</li>
+                    <li><i class="fas fa-check"></i> White-label options</li>
+                    <li><i class="fas fa-check"></i> Dedicated support</li>
+                </ul>
+                
+                <button class="plan-btn secondary">Contact Sales</button>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I cancel my subscription anytime?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, you can cancel your subscription at any time. You'll continue to have access to your plan features until the end of your current billing period.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do you offer refunds?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        We offer a 30-day money-back guarantee for all paid plans. If you're not satisfied, contact our support team for a full refund.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I upgrade or downgrade my plan?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, you can upgrade or downgrade your plan at any time. Changes will be prorated and reflected in your next billing cycle.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What payment methods do you accept?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers for enterprise plans.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Billing toggle functionality
+        const billingToggle = document.getElementById('billing-toggle');
+        const priceValues = document.querySelectorAll('.price-value');
+        const priceOriginals = document.querySelectorAll('.price-original');
+        let isYearly = false;
+
+        billingToggle.addEventListener('click', function() {
+            isYearly = !isYearly;
+            this.classList.toggle('active');
+            
+            priceValues.forEach(price => {
+                const monthly = price.getAttribute('data-monthly');
+                const yearly = price.getAttribute('data-yearly');
+                price.textContent = isYearly ? yearly : monthly;
+            });
+            
+            priceOriginals.forEach(original => {
+                const monthly = original.getAttribute('data-monthly');
+                const yearly = original.getAttribute('data-yearly');
+                original.textContent = isYearly ? `$${yearly}` : `$${monthly}`;
+            });
+        });
+
+        // FAQ functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const isActive = this.classList.contains('active');
+                
+                // Close all FAQ items
+                faqItems.forEach(faq => faq.classList.remove('active'));
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Plan button functionality
+        const planButtons = document.querySelectorAll('.plan-btn');
+        planButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
+                
+                if (planName === 'Free') {
+                    window.location.href = 'signup.html';
+                } else if (planName === 'Pro') {
+                    alert('Redirecting to Pro plan checkout...');
+                    // Add actual checkout logic here
+                } else if (planName === 'Enterprise') {
+                    alert('Please contact our sales team for enterprise pricing.');
+                    // Add contact form or email redirect
+                }
+            });
+        });
+
+        // Add smooth animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const pricingCards = document.querySelectorAll('.pricing-card');
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            // Animate pricing cards
+            pricingCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+            
+            // Animate FAQ items
+            faqItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 1000 + index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 
