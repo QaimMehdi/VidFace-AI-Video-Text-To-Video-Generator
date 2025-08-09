@@ -408,25 +408,46 @@
         </div>
     </div>
 
+    <script src="api.js"></script>
     <script>
-        document.getElementById('signin-form').addEventListener('submit', function(e) {
+        document.getElementById('signin-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            // Simulate sign in process
+            // Validate inputs
+            if (!email || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            
             const btn = document.querySelector('.auth-btn');
             const originalText = btn.innerHTML;
             
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
             btn.disabled = true;
             
-            setTimeout(() => {
-                // Simulate successful sign in
+            try {
+                // Call backend api
+                const response = await api.login({ email, password });
+                
+                console.log('login successful:', response);
+                
+                // Show success message
                 alert('Welcome back! You have successfully signed in.');
+                
+                // Redirect to main page
                 window.location.href = 'index.html';
-            }, 2000);
+                
+            } catch (error) {
+                console.error('login failed:', error);
+                alert(error.message || 'Login failed. Please check your credentials.');
+            } finally {
+                // Restore button
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         });
 
         // Add smooth animations

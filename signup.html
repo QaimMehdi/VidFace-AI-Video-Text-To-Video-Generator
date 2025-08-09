@@ -463,6 +463,8 @@
         </div>
     </div>
 
+    <div id="form-error" style="color: #ef4444; font-weight: 600; margin-bottom: 16px; text-align: center;"></div>
+    <script src="api.js"></script>
     <script>
         // Password strength checker
         document.getElementById('password').addEventListener('input', function() {
@@ -484,32 +486,86 @@
         });
 
         // Form validation
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const fullName = firstName + ' ' + lastName;
+            const email = document.getElementById('email').value;
+            const username = email.split('@')[0]; // Simple username from email
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorDiv = document.getElementById('form-error');
+            errorDiv.textContent = '';
+            
+            // Validate inputs
+            if (!firstName || !lastName || !email || !password || !confirmPassword) {
+                errorDiv.textContent = 'Please fill in all fields.';
+                return;
+            }
             
             if (password !== confirmPassword) {
-                alert('Passwords do not match!');
+                errorDiv.textContent = 'Passwords do not match!';
                 return;
             }
             
             if (password.length < 8) {
-                alert('Password must be at least 8 characters long!');
+                errorDiv.textContent = 'Password must be at least 8 characters long!';
                 return;
             }
             
-            // Simulate sign up process
             const btn = document.querySelector('.auth-btn');
+            const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
             btn.disabled = true;
             
-            setTimeout(() => {
-                // Simulate successful sign up
-                alert('Account created successfully! Welcome to VidFace!');
-                window.location.href = 'index.html';
-            }, 2000);
+            try {
+                // Call backend api
+                const userData = {
+                    full_name: fullName,
+                    username: username,
+                    email: email,
+                    password: password
+                };
+                
+                const response = await api.register(userData);
+                
+                console.log('registration successful:', response);
+                
+                // Show success message
+                errorDiv.style.color = '#10b981';
+                errorDiv.textContent = 'Account created successfully! Welcome to VidFace!';
+                
+                // Redirect to signin page after short delay
+                setTimeout(() => {
+                    window.location.href = 'signin.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('registration failed:', error);
+                // Improved error handling
+                let message = 'Registration failed. Please try again.';
+                if (error && error.message) {
+                    try {
+                        const parsed = JSON.parse(error.message);
+                        if (parsed && parsed.detail) {
+                            if (Array.isArray(parsed.detail)) {
+                                message = parsed.detail.map(d => d.msg).join('\n');
+                            } else if (typeof parsed.detail === 'string') {
+                                message = parsed.detail;
+                            }
+                        }
+                    } catch (e) {
+                        message = error.message;
+                    }
+                }
+                errorDiv.style.color = '#ef4444';
+                errorDiv.textContent = message;
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         });
 
         // Add smooth animations

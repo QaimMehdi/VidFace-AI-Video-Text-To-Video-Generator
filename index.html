@@ -156,8 +156,49 @@
                 </ul>
             </div>
             <div class="nav-right">
-                <button class="btn-secondary" onclick="window.location.href='signin.html'">Login</button>
-                <button class="btn-primary" onclick="window.location.href='signup.html'">Sign Up</button>
+                <!-- Show when user is NOT logged in -->
+                <div class="auth-buttons" id="auth-buttons">
+                    <button class="btn-secondary" onclick="window.location.href='signin.html'">Login</button>
+                    <button class="btn-primary" onclick="window.location.href='signup.html'">Sign Up</button>
+                </div>
+                
+                <!-- Show when user IS logged in -->
+                <div class="user-profile" id="user-profile" style="display: none;">
+                    <div class="profile-dropdown">
+                        <button class="profile-btn" id="profile-btn">
+                            <img src="" alt="User Avatar" id="user-avatar" class="user-avatar">
+                            <span id="user-name">User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="dropdown-menu">
+                            <div class="dropdown-header">
+                                <img src="" alt="User Avatar" id="dropdown-avatar" class="dropdown-avatar">
+                                <div class="user-info">
+                                    <span id="dropdown-name">User Name</span>
+                                    <span id="dropdown-email">user@example.com</span>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                My Profile
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-video"></i>
+                                My Videos
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item logout-btn" id="logout-btn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -194,9 +235,14 @@
                             rows="4"
                         ></textarea>
                         <div class="input-actions">
-                            <button class="generate-btn">
+                            <button class="generate-btn" type="button">
                                 <i class="fas fa-bolt"></i>
                                 Generate Video
+                            </button>
+                            
+                            <!-- Debug test button -->
+                            <button onclick="console.log('Test button clicked!'); alert('Test button works!')" style="background: red; color: white; padding: 10px; margin: 10px; border: none; border-radius: 5px;">
+                                Test Button (Click Me)
                             </button>
                         </div>
                     </div>
@@ -205,21 +251,37 @@
                     <div class="templates-section">
                         <h3>Quick Templates</h3>
                         <div class="template-buttons">
-                            <button class="template-btn">
+                            <button class="template-btn" data-template="ad">
                                 <i class="fas fa-ad"></i>
                                 Create an Ad
                             </button>
-                            <button class="template-btn">
+                            <button class="template-btn" data-template="promo">
                                 <i class="fas fa-bullhorn"></i>
                                 Create a Promo
                             </button>
-                            <button class="template-btn">
+                            <button class="template-btn" data-template="tutorial">
                                 <i class="fas fa-lightbulb"></i>
                                 Create a Tutorial
                             </button>
-                            <button class="template-btn">
+                            <button class="template-btn" data-template="presentation">
                                 <i class="fas fa-cog"></i>
                                 Create a Presentation
+                            </button>
+                            <button class="template-btn" data-template="welcome">
+                                <i class="fas fa-handshake"></i>
+                                Welcome Message
+                            </button>
+                            <button class="template-btn" data-template="announcement">
+                                <i class="fas fa-megaphone"></i>
+                                Announcement
+                            </button>
+                            <button class="template-btn" data-template="testimonial">
+                                <i class="fas fa-quote-left"></i>
+                                Customer Testimonial
+                            </button>
+                            <button class="template-btn" data-template="product">
+                                <i class="fas fa-box"></i>
+                                Product Demo
                             </button>
                         </div>
                     </div>
@@ -234,23 +296,23 @@
                 <div class="config-card">
                     <h3><i class="fas fa-user"></i> Avatar Selection</h3>
                     <div class="avatar-options">
-                        <div class="avatar-option active">
+                        <div class="avatar-option active" data-avatar="1">
                             <img src="assets/pro-male.jpg" alt="Avatar 1">
                             <span>Professional Male</span>
                         </div>
-                        <div class="avatar-option">
+                        <div class="avatar-option" data-avatar="2">
                             <img src="assets/pro-female.jpg" alt="Avatar 2">
                             <span>Professional Female</span>
                         </div>
-                        <div class="avatar-option">
+                        <div class="avatar-option" data-avatar="3">
                             <img src="assets/casual-male.jpg" alt="Avatar 3">
                             <span>Casual Male</span>
                         </div>
-                        <div class="avatar-option">
+                        <div class="avatar-option" data-avatar="4">
                             <img src="assets/casual-female.jpg" alt="Avatar 4">
                             <span>Casual Female</span>
                         </div>
-                        <div class="avatar-option upload-option">
+                        <div class="avatar-option upload-option" data-avatar="5">
                             <div class="upload-placeholder">
                                 <i class="fas fa-plus"></i>
                                 <span>Upload Your Photo</span>
@@ -580,6 +642,7 @@
         </div>
     </footer>
 
+    <script src="api.js"></script>
     <script src="script.js"></script>
 </body>
 </html> 

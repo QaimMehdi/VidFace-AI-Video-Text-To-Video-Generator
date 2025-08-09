@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Test</title>
+</head>
+<body>
+    <h1>Backend Connection Test</h1>
+    <button onclick="testHealth()">Test Health Check</button>
+    <button onclick="testRegister()">Test Register</button>
+    <div id="results"></div>
+
+    <script>
+        async function testHealth() {
+            try {
+                console.log('Testing health check...');
+                const response = await fetch('http://127.0.0.1:8000/health');
+                const data = await response.json();
+                console.log('Health check success:', data);
+                document.getElementById('results').innerHTML += '<p>✅ Health check: ' + JSON.stringify(data) + '</p>';
+            } catch (error) {
+                console.error('Health check failed:', error);
+                document.getElementById('results').innerHTML += '<p>❌ Health check failed: ' + error.message + '</p>';
+            }
+        }
+
+        async function testRegister() {
+            try {
+                console.log('Testing register...');
+                const response = await fetch('http://127.0.0.1:8000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        full_name: 'Test User',
+                        username: 'testuser',
+                        email: 'test@example.com',
+                        password: 'testpassword123'
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`HTTP ${response.status}: ${errorData.detail || 'Unknown error'}`);
+                }
+                
+                const data = await response.json();
+                console.log('Register success:', data);
+                document.getElementById('results').innerHTML += '<p>✅ Register: ' + JSON.stringify(data) + '</p>';
+            } catch (error) {
+                console.error('Register failed:', error);
+                document.getElementById('results').innerHTML += '<p>❌ Register failed: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html> 

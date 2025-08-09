@@ -223,6 +223,140 @@ body {
     gap: 16px;
 }
 
+/* User Profile Dropdown */
+.user-profile {
+    position: relative;
+}
+
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.profile-btn:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    min-width: 240px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    margin-top: 8px;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.dropdown-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #8b5cf6;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.user-info span:first-child {
+    font-weight: 700;
+    color: #1f2937;
+    font-size: 14px;
+}
+
+.user-info span:last-child {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: #f3f4f6;
+    margin: 8px 0;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: #f9fafb;
+    color: #1f2937;
+}
+
+.dropdown-item i {
+    width: 16px;
+    font-size: 14px;
+}
+
+.logout-btn {
+    color: #ef4444 !important;
+}
+
+.logout-btn:hover {
+    background: #fef2f2 !important;
+    color: #dc2626 !important;
+}
+
 /* Buttons */
 .btn-primary {
     background: #1f2937;
@@ -422,23 +556,26 @@ body {
 
 .template-buttons {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
 }
 
 .template-btn {
     background: #f9fafb;
     border: 1px solid #e5e7eb;
-    padding: 16px 20px;
+    padding: 14px 16px;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 14px;
-    font-weight: 800;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 700;
     color: #6b7280;
+    text-align: left;
+    min-height: 50px;
 }
 
 .template-btn:hover {
@@ -1022,6 +1159,24 @@ body {
         font-size: 12px;
     }
     
+    .profile-btn {
+        padding: 6px 8px;
+    }
+    
+    .user-avatar {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .profile-btn span {
+        display: none;
+    }
+    
+    .dropdown-menu {
+        right: -10px;
+        min-width: 200px;
+    }
+    
     .hero-title {
         font-size: 32px;
     }
@@ -1047,7 +1202,8 @@ body {
     }
     
     .template-buttons {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
     
     .steps-container {
@@ -1093,6 +1249,16 @@ body {
     .how-it-works,
     .reviews-section {
         padding: 20px;
+    }
+    
+    .template-buttons {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .template-btn {
+        padding: 12px 14px;
+        font-size: 12px;
     }
 }
 
