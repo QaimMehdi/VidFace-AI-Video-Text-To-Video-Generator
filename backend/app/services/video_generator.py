@@ -11,7 +11,8 @@ class VideoGenerator:
     
     def __init__(self):
         # write to a completely separate directory to avoid any file watching issues
-        default_out = Path("C:/temp/vidface_videos")  # Use C:/temp which is outside any project
+        from app.core.config import settings
+        default_out = Path(settings.VIDEO_OUTPUT_DIR)  # Use settings instead of hardcoded
         output_root = Path(os.getenv("VIDEO_OUTPUT_DIR", default_out))
         output_root.mkdir(parents=True, exist_ok=True)
         self.temp_dir = output_root

@@ -1,0 +1,77 @@
+# Environment variables and sensitive files
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# API Keys and Secrets
+secrets.json
+config/secrets.yaml
+*.key
+*.pem
+
+# Cache directories
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Generated/uploaded files
+uploads/
+generated_videos/
+temp/
+static/uploads/
+C:/temp/vidface_videos/
+
+# Node modules (if using npm/yarn)
+node_modules/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Compiled files
+*.pyc
+*.pyo
+*.so
+*.dll
+
+# Package files
+*.egg-info/
+dist/
+build/ 

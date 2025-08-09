@@ -31,7 +31,7 @@ app = FastAPI(
 # add CORS middleware FIRST (before any other middleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.CORS_ORIGINS,  # Use secure settings
     allow_credentials=False,  # must be false when allow_origins is ["*"]
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,13 +44,13 @@ app.add_middleware(
 # mount static files with security
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# mount generated videos outside backend to avoid reloads
+# mount generated videos using environment variable
 import pathlib
 _output_env = os.getenv("VIDEO_OUTPUT_DIR")
 if _output_env:
     _generated_dir = pathlib.Path(_output_env)
 else:
-    _generated_dir = pathlib.Path("C:/temp/vidface_videos")  # Use C:/temp to avoid any file watching
+    _generated_dir = pathlib.Path(settings.VIDEO_OUTPUT_DIR)  # Use settings instead of hardcoded
 _generated_dir.mkdir(parents=True, exist_ok=True)
 app.mount("/generated", StaticFiles(directory=str(_generated_dir)), name="generated")
 

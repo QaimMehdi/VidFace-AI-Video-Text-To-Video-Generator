@@ -286,7 +286,8 @@ async def generate_video_background(video_id: int, user_id: int):
             
             # move/copy to generated directory outside backend
             # use the same directory that's mounted as /generated
-            base_dir = "C:/temp/vidface_videos"
+            from app.core.config import settings
+            base_dir = settings.VIDEO_OUTPUT_DIR  # Use settings instead of hardcoded
             os.makedirs(base_dir, exist_ok=True)
             target_path = os.path.join(base_dir, f"{video.id}.mp4")
             print(f"Copying video from {video_path} to {target_path}")
